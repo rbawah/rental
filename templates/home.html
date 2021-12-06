@@ -1,0 +1,34 @@
+{% extends 'base_main.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+  <h1>Welcome to DjangoRealtor</h1>
+
+  <!--div-->
+    <!-- https://www.w3schools.com/howto/howto_css_search_button.asp -->
+      <!--form action="#" method="get">
+        <input name="searchpage" type="text" class="form-control">
+      </form>
+  </div-->
+
+{% for city in cities %}
+<a class="home-item" href="{% url 'city_homes' city.slug %}">
+    <div class="card card-body bg-light">
+        <div class="col col-sm order-sm-first col-md">
+            <div class="media">
+                <img class="bookcover d-flex mr-3 img-thumbnail align-self-center" src="{{ city.image.url }}" alt="picture of {{ city }}">
+            <div class="media-body">
+            <h4 class="mt-0"><span class="badge badge-pill badge-secondary">Find homes in {{ city }}</span></h4>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</a>
+<hr>
+{% endfor %}
+
+{% endblock content %}

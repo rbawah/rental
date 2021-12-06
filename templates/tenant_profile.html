@@ -1,0 +1,18 @@
+{% extends "base_main.html" %}
+
+{% block content %}
+
+{% if request.user == home.manager or request.user == home.tenant %}
+<h4>{{ home.tenant.get_full_name | default:home.tenant }}</h4>
+
+<ul>
+  <li>Name: {{ home.tenant.get_full_name|default:home.tenant.username }}</li>
+  <li>Phone: {{ home.tenant.phone_number }}</li>
+  <li>Birth Date: {{ home.tenant.dob }}</li>
+  <li>Email Address: {{ home.tenant.email }}</li>
+</ul>
+{% else %}
+<p>You are not permitted here.</p>
+{% endif %}
+
+{% endblock %}

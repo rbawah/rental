@@ -1,0 +1,18 @@
+{% extends "base_main.html" %}
+
+{% block content %}
+<h4>{{ user.get_fullname|default:user.username }}</h4>
+
+<h5><a href="{% url 'user_change' %}">Update Your Profile <i class="fa fa-edit"></i></a></h5>
+
+<ul>
+  {# <!--li>Username: {{ user.username }}</li--> #}
+  <li>Name: {{ user.get_fullname|default:user.username }}</li>
+  <li>Sex: </li>
+  <li>Birth Date: {{ user.dob }}</li>
+  <li>Phone: {{ user.phone_numbe }}</li>
+  <li>LinkedIn <i class="fa fa-linkedin"></i>: </li>
+  <li>Twitter <i class="fa fa-twitter"></i>: </li>
+  <li>Instagram <i class="fa fa-instagram"></i>: </li>
+</ul>
+{% endblock %}

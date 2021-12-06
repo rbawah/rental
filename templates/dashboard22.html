@@ -1,0 +1,28 @@
+{% extends 'base_main.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<h3>Manage Your Tenant Profile</h3>
+<hr>
+<a href="{% url 'user_profile' %}">
+    <div class="card card-body bg-light">
+        <div class="col col-sm order-sm-first col-md">
+            <div class="media">
+                <img class="bookcover d-flex mr-3 img-thumbnail align-self-center" src="{% static 'images/profile_image.jpg' %}" alt="">
+            <div class="media-body">
+            <h4 class="mt-0"><span class="badge badge-pill badge-secondary">Your Profile </span></h4>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</a>
+<hr>
+
+<!--h4>You're not permitted here!</h4-->
+
+{% endblock content %}

@@ -1,0 +1,73 @@
+{% extends "base_main.html" %}
+{% load mainpages_tags %}
+
+{% block content %}
+{% if search %}
+<h4>Your search results for "{{ search }}"" </h4>
+{% endif %}
+
+{% if page_obj %}
+    {% if building %}
+        <h4>Units in {{ building }} </h4>
+    {% endif %}
+    {% if city %}
+        <h4>Homes in {{ city }} </h4>
+    {% endif %}
+
+
+    {% for home in page_obj %}
+        <a href="{{ home.get_absolute_url }}">
+        <div class="card card-body bg-light">
+            <div class="col col-sm order-sm-first col-md">
+				<div class="media">
+                    {# <!--img class="d-flex mr-3 img-thumbnail align-self-center" src="{% static 'blog/media/uploads/2021/10/28/desert.jpg' %}" alt=" "--> #}
+                    <div class="media-body">
+                        <h5 class="mt-0"><span class="badge badge-pill badge-secondary">{{ home }}</span></h5>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </a>
+    <hr>
+
+{% endfor %}
+{% else %}
+    {% if search %}
+    <p>There are no units for your search "{{ search }}".</p>
+    {% else %}
+    <p>There are no units to display.</p>
+    {% endif %}
+{% endif %}
+
+{% if request.user|has_group:"Managers" %}
+<a class="btn btn-outline-primary" href="{% url 'unit-create' %}">Add a Unit</a>
+{% else %}
+{% endif %}
+
+
+
+
+<!--Pagination-->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                {# <a href="?page=1">&laquo; <button type="button" class="btn btn-danger">First</button></a> #}
+                <a href="?page={{ page_obj.previous_page_number }}"><button type="button" class="btn btn-danger">Previous</button></a>
+            {% endif %}
+    
+            <span class="page-current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}"><button type="button" class="btn btn-danger">Next</button></a>
+                {# <a href="?page={{ page_obj.paginator.num_pages }}"><button type="button" class="btn btn-danger">Last</button> &raquo;</a> #}
+            {% endif %}
+        </span>
+    </div>
+
+    <!--Pagination End-->
+{% endblock %}

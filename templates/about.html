@@ -1,0 +1,24 @@
+{% extends 'base_main.html' %}
+
+{% block title %}Dashboard{% endblock title %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+
+<h3>Manage Your Portfolio</h3>
+
+<ul class="list-unstyled components">
+    <li>
+        <a href="{% url 'building-list' %}">
+            <h4 class="mt-0"><span class="badge badge-pill badge-secondary"> Buildings </span></h4>
+        </a>
+    </li>
+    <li>
+        <a href="{% url 'allunits' %}">
+            <h4 class="mt-0"><span class="badge badge-pill badge-secondary"> All Units </span></h4>
+        </a>
+    </li>
+
+</ul>
+{% endblock content %}

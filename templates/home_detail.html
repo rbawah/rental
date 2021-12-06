@@ -1,0 +1,42 @@
+{% extends "base_main.html" %}
+{#% load humanize %#} <!-- https://docs.djangoproject.com/en/3.0/ref/contrib/humanize -->
+
+{% block content %}
+<span style="float: right;">
+<h5>Managed By: {{ home.manager.get_full_name | default:home.manager }} </h5>
+</span>
+
+<div>
+    <h3>{{ home.name }}</h3>
+    <h5>Type: {{ home.hometype }}</h5>
+    <h5>Date Created: {{ home.date_added }}</h5>
+    <h5>Province: {{ home.province }}</h5>
+    <h5>City: {{ home.location }}</h5>
+    <h5>Postal Code: {{ home.postal_code }}</h5>
+    <h5>Address: {{ home.address }}</h5>
+
+    {% if home.tenant %}
+        {% if request.user == home.manager or request.user == home.tenant or request.user.is_superuser %}
+        <h5>Tenant: <a href="{% url 'tenant-info' home.slug %}">{{ home.tenant.get_full_name | default:home.tenant }}</a></h5>
+        {% endif %}
+    {% endif %}
+    
+    <h5>Unit Status: {{ home.status }}</h5>
+    <h5>Unit Size: {{ home.size }} sqft</h5>
+    <h5>Bedrooms: {{ home.bedrooms }}</h5>
+    <h5>Living Rooms: {{ home.livingrooms }}</h5>
+    <h5>Bathrooms: {{ home.bathrooms }}</h5>
+    <h5>Dens: {{ home.dens }}</h5>
+<hr>
+    {{ home.pictures | safe}}
+</div>
+
+<hr>
+<div>
+    <a class="btn btn-outline-info" href="{% url 'allhomes' %}">View All Homes</a>
+    <a class="btn btn-outline-primary" href="{% url 'home-update' home.slug %}">Update {{ home.name }}</a>
+    <a class="btn btn-outline-danger" style="float: right;" href="{% url 'home-delete' home.slug %}">
+            Delete {{ home.name }}?</a>
+</div>
+<hr>
+{% endblock %}

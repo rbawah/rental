@@ -1,0 +1,17 @@
+{% extends "base_main.html" %}
+
+
+{% block content %}
+<span style="float: right;">
+<p>Managed By: {{ unit.manager }} </p>
+
+</span>
+<div>
+    <h3>{{ unit.name }}</h3>
+</div>
+
+<h4><a class="btn btn-outline-danger" href="{% url 'unit-delete' unit.slug %}">Delete {{ unit.name }}?</a></h4>
+<p>
+<a href="{% url 'allunits' %}">View All Units</a>
+</p>
+{% endblock %}
