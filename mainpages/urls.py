@@ -10,8 +10,8 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('dashboard/', DashboardView.as_view(), name = 'dashboard'),
     path('buildings/', BuildingListView.as_view(), name='building-list'),
-    path('<slug:slug>/units', UnitsListView.as_view(), name='building-units-list'), #Units in a specific building
-    path('<slug:slug>/homes', CityHomesView.as_view(), name='city_homes'),
+    path('<slug:slug>/units/', UnitsListView.as_view(), name='building-units-list'), #Units in a specific building
+    path('<slug:slug>/homes/', CityHomesView.as_view(), name='city_homes'),
     #path('units/', HomeSearchView.as_view(), name='home_search'),
     path('allunits/', OwnerListView.as_view(
             model = Unit,
