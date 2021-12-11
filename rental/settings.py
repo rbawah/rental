@@ -224,8 +224,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional' # Lookup
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 #SENDGRID
-DEFAULT_FROM_EMAIL = env("DJANGO_DEFAULT_FROM_EMAIL")
-EMAIL_HOST_PASSWORD = env("DJANGO_EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = "rashbawah@gmail.com"
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 # -------
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_HOST_USER = "apikey"
@@ -259,7 +259,7 @@ cloudinary.config(
   api_secret = "_lq2uMyqbRRBrtnXj1qQCvGL4dI" 
 )"""
 
-CLOUDINARY_URL = env("DJANGO_CLOUDINARY_URL")
+CLOUDINARY_URL = env("CLOUDINARY_URL")
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -294,7 +294,7 @@ import socket
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
 
-
+'''
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
@@ -304,4 +304,4 @@ CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
+'''

@@ -13,9 +13,8 @@ services:
     environment:
       - "DJANGO_SECRET_KEY=4-7!kh6c^_v5s97aq@_znc&-)hj)x6ji^lx2!tckc+!eqekutu"
       - "DJANGO_DEBUG=True"
-      - "DJANGO_EMAIL_HOST_PASSWORD=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"
-      - "DJANGO_DEFAULT_FROM_EMAIL=rashbawah@gmail.com"
-      - "DJANGO_CLOUDINARY_URL=cloudinary://397356611417876:nSftT-Z058cktrA2M4pgBfHYybc@hu6y0moa2"
+      - "EMAIL_HOST_PASSWORD=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"
+      - "CLOUDINARY_URL=cloudinary://397356611417876:nSftT-Z058cktrA2M4pgBfHYybc@hu6y0moa2"
       - "DJANGO_SECURE_SSL_REDIRECT=False"
       - "DJANGO_SECURE_HSTS_SECONDS=0"
       - "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS=False"
