@@ -41,9 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    #'whitenoise.runserver_nostatic',
-    'cloudinary_storage',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
     'cloudinary',
     'django.contrib.sites',
     # 3rd Party Apps
@@ -94,7 +94,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 MIDDLEWARE = [
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -236,8 +236,8 @@ EMAIL_USE_TLS = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
 STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",

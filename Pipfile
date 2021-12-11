@@ -18,6 +18,7 @@ environs = {extras = ["django"], version = "*"}
 django-debug-toolbar = "==2.2"
 django = "~=3.1"
 django-cloudinary-storage = "==0.3.0"
+whitenoise = "==5.3.0"
 
 [dev-packages]
 
