@@ -219,7 +219,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS=2
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE=True
 ACCOUNT_EMAIL_VERIFICATION = 'optional' # Lookup
-DEFAULT_FROM_EMAIL = 'admin@djangorealtor.ca'
+
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
