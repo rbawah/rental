@@ -184,8 +184,6 @@ class Unit(Home):
 class HomePhotos(models.Model):
     home = models.ForeignKey(Home, default=None, on_delete=models.CASCADE, related_name = 'pics_home',)
     pictures = models.ImageField(upload_to = 'homes/', blank = True, )
-''' 
+ 
     def __str__(self):
         return self.home.name
-
-    '''

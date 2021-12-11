@@ -22,8 +22,6 @@ class OwnerListView(ListView):
 
 
 class OwnerDetailView(LoginRequiredMixin, DetailView):
-    #permission_required = ('mainpages.building.manager_status', 'mainpages.home.manager_status')
-    #permission_denied_message = "You are not Permitted to access this Page"
     """
     Sub-class the DetailView to pass the request to the form.
     """

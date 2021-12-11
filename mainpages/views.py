@@ -1,17 +1,17 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView, ListView, UpdateView
 from django.core.paginator import Paginator
-from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
-from mainpages.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
-from mainpages.models import Building, Unit, Home, HomeType, LocationCity
+from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
+from django.forms import modelformset_factory
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.urls import reverse, reverse_lazy
+from mainpages.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
+from mainpages.models import Building, Unit, Home, HomeType, LocationCity, HomePhotos
+from mainpages.forms import HomeForm, ImageForm, ImageFormSet
 
-
-def is_manager(self):
-    return self.groups.filter(name='Managers').exists
-
-def is_tenant(self):
-    return self.groups.filter(name='Tenants').exists
 
 
 class HomePageView(TemplateView):
@@ -88,4 +88,105 @@ class HomeSearchView(OwnerListView):
         query = self.request.GET.get('searchpage')
         return Home.objects.filter(location__city__icontains=query)
 
+#class HomeDetailView(OwnerDetailView): 
 
+def home_detail(request, slug):
+    home = get_object_or_404(Home, slug=slug)
+    photos = HomePhotos.objects.filter(home__slug=slug)
+    ctx = {'home':home, 'photos':photos}
+    return render(request, 'home_detail22.html', ctx)
+
+
+@login_required
+@permission_required('mainpages.add_home')
+def home_create(request):
+ 
+    ImageFormSet = modelformset_factory(HomePhotos, form=ImageForm, extra=3, max_num=6,)
+    if request.method == 'POST':
+        homeForm = HomeForm(request.POST)
+        formset = ImageFormSet(request.POST, request.FILES, queryset=HomePhotos.objects.none())
+    
+        if homeForm.is_valid() and formset.is_valid():
+            home_form = homeForm.save(commit=False)
+            home_form.manager = request.user
+            home_form.save()
+            formset.save()
+    
+            for form in formset.cleaned_data:
+                if form:
+                    pictures = form['pictures']
+                    photos = HomePhotos(home=home_form, pictures=pictures)
+                    photos.save()
+            messages.success(request, "Successfully uploaded!")
+            return HttpResponseRedirect("/allhomes/")
+        else:
+            print(homeForm.errors, formset.errors)
+    else:
+        homeForm = HomeForm()
+        formset = ImageFormSet(queryset=HomePhotos.objects.none())
+
+
+    return render(request, 'create_home.html', {'homeForm': homeForm, 'formset': formset})
+
+
+class HomeCreateView(CreateView):
+    model = Home
+    permission_required = 'mainpages.add_home',
+    success_url=reverse_lazy('allhomes')
+    template_name = 'create_home.html'
+    fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'size', 'livingrooms',
+            'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise',)
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeCreateView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['image_formset'] = ImageFormSet(self.request.POST, self.request.FILES)
+        else:
+            context['image_formset'] = ImageFormSet()
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data(form=form)
+        formset = context['image_formset']
+        object = form.save(commit=False)
+        object.manager = self.request.user
+        object.save()
+        if formset.is_valid():
+            response = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return response
+        else:
+            return super().form_invalid(form)
+
+
+class HomeUpdateView(UpdateView):
+    model = Home
+    permission_required = 'mainpages.change_home',
+    success_url=reverse_lazy('allhomes')
+    template_name = 'create_home.html'
+    fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'size', 'livingrooms',
+            'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise',)
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeUpdateView, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['image_formset'] = ImageFormSet(self.request.POST, self.request.FILES, instance=self.object)
+            context['image_formset'].full_clean()
+        else:
+            context['image_formset'] = ImageFormSet(instance=self.object)
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data(form=form)
+        formset = context['image_formset']
+        object = form.save(commit=False)
+        object.manager = self.request.user
+        object.save()
+        if formset.is_valid():
+            response = super().form_valid(form)
+            formset.instance = self.object
+            formset.save()
+            return response
+        else:
+            return super().form_invalid(form)

@@ -1,0 +1,19 @@
+{% extends "base_main.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<p>
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <table>
+        {{ form }}
+      </table>
+      <table>
+        {{ image_formset }}
+      </table>
+
+    <input type="submit" value="Submit">
+    <input type="submit" value="Cancel" onclick="window.location.href='{% url 'home' %}';return false;">
+  </form>
+</p>
+{% endblock %}

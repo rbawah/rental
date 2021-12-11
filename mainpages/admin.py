@@ -1,6 +1,8 @@
 from django.contrib import admin
-from mainpages.models import Building, Home, HomeType, LocationProvince, LocationCity, Unit
+from mainpages.models import Building, Home, HomeType, LocationProvince, LocationCity, Unit, HomePhotos
 
+class HomePhotosAdmin(admin.StackedInline):
+    model = HomePhotos
 
 # Register your models here
 class BuildingAdmin(admin.ModelAdmin):
@@ -10,6 +12,12 @@ class UnitAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 class HomeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
+    inlines = [HomePhotosAdmin]
+    extra = 0
+ 
+    class Meta:
+       model = Home    
+
 class HomeTypeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 class LocationProvinceAdmin(admin.ModelAdmin):

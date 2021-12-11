@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 psycopg2-binary = "*"
-django = "*"
 django-crispy-forms = "*"
 django-allauth = "*"
 pillow = "*"
@@ -16,8 +15,9 @@ pyyaml = "*"
 uritemplate = "*"
 drf-yasg = "*"
 environs = {extras = ["django"], version = "*"}
-whitenoise = "*"
-gunicorn = "*"
+django-debug-toolbar = "==2.2"
+django = "~=3.1"
+django-cloudinary-storage = "==0.3.0"
 
 [dev-packages]
 

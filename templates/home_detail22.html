@@ -1,0 +1,96 @@
+{% extends 'base_main.html' %}
+
+{% block content %}
+
+<span style="float: right;">
+    <h5>Managed By: {{ home.manager.get_full_name | default:home.manager }} </h5>
+    </span>
+        <h3>{{ home.name }}</h3>    
+ 
+    
+    <hr>
+
+    <div>
+        <a class="btn btn-info" href="{% url 'allhomes' %}">View All Homes</a>
+        {% if request.user == home.manager or request.user.is_superuser %}
+        <a class="btn btn-primary" href="{% url 'home-update' home.slug %}">Update {{ home.name }}</a>
+        <a class="btn btn-danger" style="float: right;" href="{% url 'home-delete' home.slug %}">
+                Delete {{ home.name }}?</a>
+        {% endif %}
+    </div>
+    <hr>
+
+<!--Carousel Wrapper-->
+<div id="carousel-example-1z" class="carousel slide carousel-fade" data-ride="carousel" data-interval="1000" >
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+    {% for p in photos %}
+      <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+    {% endfor %}
+    </ol>
+    <!--/.Indicators-->
+    <!--Slides-->
+    <div class="carousel-inner" role="listbox">
+      {% for p in photos %}
+      <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
+        <img class="d-block w-100" src="{{p.pictures.url}}"
+          alt="First slide">
+      </div>
+      {% endfor %}
+      <!--/First slide-->
+    <!--/.Slides-->
+    <!--Controls-->
+    <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+  <hr>
+
+  <div>
+    <h5>About this property: {{ home.description }}</h5>
+    <h5>Type: {{ home.hometype }}</h5>
+    <h5>Date Created: {{ home.date_added }}</h5>
+    <h5>Province: {{ home.province }}</h5>
+    <h5>City: {{ home.location }}</h5>
+    <h5>Postal Code: {{ home.postal_code }}</h5>
+    <h5>Address: {{ home.address }}</h5>
+
+    {% if home.tenant %}
+        {% if request.user == home.manager or request.user == home.tenant or request.user.is_superuser %}
+        <h5>Tenant: <a href="{% url 'tenant-info' home.slug %}">{{ home.tenant.get_full_name | default:home.tenant }}</a></h5>
+        {% endif %}
+    {% endif %}
+
+    {% if unit.building %}
+        {% if request.user == home.manager or request.user.is_superuser %}
+        <h5>Building: <a href="{% url 'building-units-list' unit.building.slug %}">{{ unit.building }}</a></h5>
+        {% endif %}
+    {% endif %}
+    
+    <h5>Status: {{ home.status }}</h5>
+    <h5>Size: {{ home.size }} sqft</h5>
+    <h5>Bedrooms: {{ home.bedrooms }}</h5>
+    <h5>Living Rooms: {{ home.livingrooms }}</h5>
+    <h5>Bathrooms: {{ home.bathrooms }}</h5>
+    <h5>Dens: {{ home.dens }}</h5>
+
+    {#{ home.pictures | safe}#}
+</div>
+
+  <hr>
+  <div>
+    <a class="btn btn-info" href="{% url 'allhomes' %}">View All Homes</a>
+    {% if request.user == home.manager or request.user.is_superuser %}
+    <a class="btn btn-primary" href="{% url 'home-update' home.slug %}">Update {{ home.name }}</a>
+    <a class="btn btn-danger" style="float: right;" href="{% url 'home-delete' home.slug %}">
+            Delete {{ home.name }}?</a>
+      {% endif %}
+
+</div>
+<hr>
+  {% endblock %}
