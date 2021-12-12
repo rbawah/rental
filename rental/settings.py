@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("DJANGO_SECRET_KEY")
-#SECRET_KEY ='4-7!kh6c^_v5s97aq@_znc&-)hj)x6ji^lx2!tckc+!eqekutu'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
@@ -59,8 +59,6 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'dj_rest_auth.registration',
     'dj_rest_auth',
-    'ckeditor',
-    'ckeditor_uploader',
     'drf_yasg',
     'debug_toolbar',
     #Local Apps
@@ -81,10 +79,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
-CKEDITOR_ALLOW_NONIMAGE_FILES = False
-CKEDITOR_RESTRICT_BY_USER = True
-CKEDITOR_IMAGE_BACKEND ="pillow"
 
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -261,7 +255,7 @@ cloudinary.config(
 )"""
 
 CLOUDINARY_URL = env("CLOUDINARY_URL")
-
+"""
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'Custom',
@@ -270,7 +264,7 @@ CKEDITOR_CONFIGS = {
     }
 
 }
-
+"""
 """
 CKEDITOR_CONFIGS = {
     'default': {
@@ -295,7 +289,7 @@ import socket
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
 
-'''
+
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
@@ -305,4 +299,4 @@ CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-'''
+
