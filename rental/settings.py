@@ -221,10 +221,11 @@ ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE=True
 ACCOUNT_EMAIL_VERIFICATION = 'optional' # Lookup
 
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 #SENDGRID
-DEFAULT_FROM_EMAIL = "rashbawah@gmail.com"
+#DEFAULT_FROM_EMAIL = "rashbawah@gmail.com"
+#EMAIL_HOST_PASSWORD="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"
 #EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 # -------
 EMAIL_HOST = "smtp.sendgrid.net"
