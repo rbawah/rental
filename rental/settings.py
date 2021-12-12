@@ -197,6 +197,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #LOGOUT_REDIRECT_URL = 'home'
 
 
+
 # django-allauth config
 LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT = 'home' # new
