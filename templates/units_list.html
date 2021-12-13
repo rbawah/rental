@@ -20,9 +20,11 @@
         <div class="card card-body bg-light">
             <div class="col col-sm order-sm-first col-md">
 				<div class="media">
-                    {# <!--img class="d-flex mr-3 img-thumbnail align-self-center" src="{% static 'blog/media/uploads/2021/10/28/desert.jpg' %}" alt=" "--> #}
+                    {#<img class="d-flex mr-3 align-self-center" src="{{ }}" alt=" ">#}
                     <div class="media-body">
-                        <h5 class="mt-0"><span class="badge badge-pill badge-secondary">{{ home.name }}</span></h5>
+                        <h5 class="mt-0"><span class="badge badge-pill badge-secondary">{{ home.name }} </span>
+                            -$ {{ home.rent }} per month - {{ home.neighbourhood }} - 
+                            Bedrooms: {{ home.bedrooms }}  - Baths: {{ home.bathrooms }}  </h5>
 
 
                     </div>

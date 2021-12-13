@@ -1,7 +1,11 @@
-h1 {
+h2 {
     color: #0400ff;
   }
   
+
+  .navbar-light {
+    background-color: #ddd9e9; }
+
   .citycover {
     height: 150px;
     width: auto;

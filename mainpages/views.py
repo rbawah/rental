@@ -11,7 +11,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.postgres.search import  SearchQuery, SearchRank, SearchVector
 from mainpages.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
 from mainpages.models import Building, Unit, Home, HomeType, LocationCity, HomePhotos
-from mainpages.forms import HomeForm, ImageForm, ImageFormSet
+from mainpages.forms import ImageFormSet#, HomeForm, ImageForm, 
 
 
 
@@ -90,7 +90,7 @@ class HomeSearchView(ListView): #includes all homes view logic
             query = SearchQuery(strval)
             home_list = Home.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')
         else :
-            home_list = Homes.objects.all().filter(status='Ready').order_by('date_added')
+            home_list = Home.objects.all().filter(status='Ready').order_by('date_added')
         paginator = Paginator(home_list, 10)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
@@ -105,12 +105,12 @@ def home_detail(request, slug):
     return render(request, 'home_detail22.html', ctx)
 
 
-class HomeCreateView(CreateView):
+class HomeCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Home
     permission_required = 'mainpages.add_home',
     success_url=reverse_lazy('allhomes')
     template_name = 'create_home.html'
-    fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'size', 'livingrooms',
+    fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'neighbourhood', 'rent', 'size', 'livingrooms',
             'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise', 'tags', )
 
     def get_context_data(self, **kwargs):
@@ -136,12 +136,12 @@ class HomeCreateView(CreateView):
             return super().form_invalid(form)
 
 
-class HomeUpdateView(UpdateView):
+class HomeUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Home
     permission_required = 'mainpages.change_home',
     success_url=reverse_lazy('allhomes')
     template_name = 'create_home.html'
-    fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'size', 'livingrooms',
+    fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'neighbourhood', 'rent', 'size', 'livingrooms',
             'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise', 'tags', )
 
     def get_context_data(self, **kwargs):
