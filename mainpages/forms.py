@@ -10,7 +10,7 @@ class HomeForm(forms.ModelForm):
     class Meta:
         model = Home
         fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'size', 'livingrooms',
-                 'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise',)
+                 'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise', 'tags',)
  
  
 class ImageForm(forms.ModelForm):

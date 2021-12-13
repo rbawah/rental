@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.postgres', # Postgre Full Text Search
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'cloudinary_storage',

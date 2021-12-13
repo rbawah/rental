@@ -2,19 +2,19 @@ from django.urls import path, reverse_lazy
 from django.conf.urls import url
 from mainpages.models import Building, Unit, Home
 from mainpages import views
-from mainpages.views import HomePageView, DashboardView, BuildingListView, UnitsListView, HomeSearchView, CityHomesView, HomeCreateView
+from mainpages.views import HomePageView, DashboardView, BuildingListView, UnitsListView, CityHomesView, HomeCreateView
 from mainpages.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
 
 
 urlpatterns = [
 
-    path('', HomePageView.as_view(), name='home'),
+    path('', views.HomePageView.as_view(), name='home'),
     path('homes/<slug:slug>/', views.home_detail, name='home-detail'),
-    path('dashboard/', DashboardView.as_view(), name = 'dashboard'),
-    path('buildings/', BuildingListView.as_view(), name='building-list'),
-    path('<slug:slug>/units/', UnitsListView.as_view(), name='building-units-list'), #Units in a specific building
-    path('<slug:slug>/homes/', CityHomesView.as_view(), name='city_homes'),
-    #path('units/', HomeSearchView.as_view(), name='home_search'),
+    path('dashboard/', views.DashboardView.as_view(), name = 'dashboard'),
+    path('buildings/', views.BuildingListView.as_view(), name='building-list'),
+    path('<slug:slug>/units/', views.UnitsListView.as_view(), name='building-units-list'), #Units in a specific building
+    path('<slug:slug>/homes/', views.CityHomesView.as_view(), name='city_homes'),
+    path('homes/', views.HomeSearchView.as_view(), name='home_search'),
     path('allunits/', OwnerListView.as_view(
             model = Unit,
             template_name = "allunit_list.html",

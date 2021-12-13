@@ -25,11 +25,11 @@
 
       <div style="float:inline-lefi">
 
-          <form action="{% url 'building-list' %}">
+          <form action="{% url 'home_search' %}">
             <input type="text" placeholder="Search for homes..." name="search"
             {% if search %} value="{{ search }}" {% endif %}>
             <button type="submit"><i class="fa fa-search"></i></button>
-          <a href="{% url 'building-list' %}"><i class="fa fa-undo"></i></a>
+          <a href="{% url 'home_search' %}"><i class="fa fa-undo"></i></a>
           </form>
       </div>
       <nav class="my-2 my-md-0 mr-md-3">

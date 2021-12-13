@@ -8,6 +8,7 @@ from django.forms import modelformset_factory
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+from django.contrib.postgres.search import  SearchQuery, SearchRank, SearchVector
 from mainpages.owner import OwnerListView, OwnerDetailView, OwnerCreateView, OwnerUpdateView, OwnerDeleteView
 from mainpages.models import Building, Unit, Home, HomeType, LocationCity, HomePhotos
 from mainpages.forms import HomeForm, ImageForm, ImageFormSet
@@ -29,14 +30,13 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 
 class BuildingListView(OwnerListView): # Tests to be written
-    #permission_required = ('building.manager_status',)
+    permission_required = ('mainpages.view_building',)
     template_name = "buildings_list.html"
 
     def get(self, request) :
         strval =  request.GET.get("search", False)
         if strval :
             query = Q(name__icontains=strval)
-            #query.add(Q(description__icontains=strval), Q.OR)
             building_list = Building.objects.filter(query).order_by('name')
         else :
             building_list = Building.objects.all().order_by('name')
@@ -63,7 +63,7 @@ class UnitsListView(OwnerListView):
         return render(request, self.template_name, ctx)
 
 
-class CityHomesView(OwnerListView):
+class CityHomesView(ListView):
     template_name = 'units_list.html'
 
     def get(self, request, slug):
@@ -79,16 +79,24 @@ class CityHomesView(OwnerListView):
         return render(request, self.template_name, ctx)
 
 
-class HomeSearchView(OwnerListView):
-    model = Home
-    context_object_name = "home_list"
-    template_name='allunit_list.html'
+class HomeSearchView(ListView): #includes all homes view logic
+    template_name='units_list.html'
 
-    def get_queryset(self):
-        query = self.request.GET.get('searchpage')
-        return Home.objects.filter(location__city__icontains=query)
+    def get(self, request):
+        strval =  request.GET.get("search", False)
+        if strval :
+            #query = strval
+            vector = SearchVector('name', 'location__city', 'description', )
+            query = SearchQuery(strval)
+            home_list = Home.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')
+        else :
+            home_list = Homes.objects.all().filter(status='Ready').order_by('date_added')
+        paginator = Paginator(home_list, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        ctx = {'page_obj': page_obj, 'search': strval}
+        return render(request, self.template_name, ctx)
 
-#class HomeDetailView(OwnerDetailView): 
 
 def home_detail(request, slug):
     home = get_object_or_404(Home, slug=slug)
@@ -97,45 +105,13 @@ def home_detail(request, slug):
     return render(request, 'home_detail22.html', ctx)
 
 
-@login_required
-@permission_required('mainpages.add_home')
-def home_create(request):
- 
-    ImageFormSet = modelformset_factory(HomePhotos, form=ImageForm, extra=3, max_num=6,)
-    if request.method == 'POST':
-        homeForm = HomeForm(request.POST)
-        formset = ImageFormSet(request.POST, request.FILES, queryset=HomePhotos.objects.none())
-    
-        if homeForm.is_valid() and formset.is_valid():
-            home_form = homeForm.save(commit=False)
-            home_form.manager = request.user
-            home_form.save()
-            formset.save()
-    
-            for form in formset.cleaned_data:
-                if form:
-                    pictures = form['pictures']
-                    photos = HomePhotos(home=home_form, pictures=pictures)
-                    photos.save()
-            messages.success(request, "Successfully uploaded!")
-            return HttpResponseRedirect("/allhomes/")
-        else:
-            print(homeForm.errors, formset.errors)
-    else:
-        homeForm = HomeForm()
-        formset = ImageFormSet(queryset=HomePhotos.objects.none())
-
-
-    return render(request, 'create_home.html', {'homeForm': homeForm, 'formset': formset})
-
-
 class HomeCreateView(CreateView):
     model = Home
     permission_required = 'mainpages.add_home',
     success_url=reverse_lazy('allhomes')
     template_name = 'create_home.html'
     fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'size', 'livingrooms',
-            'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise',)
+            'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise', 'tags', )
 
     def get_context_data(self, **kwargs):
         context = super(HomeCreateView, self).get_context_data(**kwargs)
@@ -166,7 +142,7 @@ class HomeUpdateView(UpdateView):
     success_url=reverse_lazy('allhomes')
     template_name = 'create_home.html'
     fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'size', 'livingrooms',
-            'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise',)
+            'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise', 'tags', )
 
     def get_context_data(self, **kwargs):
         context = super(HomeUpdateView, self).get_context_data(**kwargs)
