@@ -52,22 +52,22 @@ urlpatterns = [
         ), name='building-delete'),
 
     path('unit/create',
-        OwnerCreateView.as_view(
+        views.HomeCreateView.as_view(
             success_url=reverse_lazy('allunits'),
             model = Unit,
-            template_name = "form.html",
+            #template_name = "form.html",
             permission_required = 'mainpages.add_unit',
-            fields = ['name', 'hometype', 'province', 'location', 'postal_code', 'address', 'size', 'livingrooms',
-                 'bedrooms', 'bathrooms', 'dens', 'description', 'building', 'tenant', 'date_available', 'status', 'advertise',]
+            fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'neighbourhood', 'rent', 'size', 'livingrooms',
+            'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise', 'tags', 'building', )
          ), name='unit-create'),
 
         path('unit/<slug:slug>/update',
-        OwnerUpdateView.as_view(
+        views.HomeUpdateView.as_view(
             success_url=reverse_lazy('allunits'),
             model = Unit,
-            fields = ['name', 'hometype', 'province', 'location', 'postal_code', 'address', 'size', 'livingrooms',
-                 'bedrooms', 'bathrooms', 'dens', 'description', 'building', 'tenant', 'date_available', 'status', 'advertise', ],
-            template_name = "form.html"),
+            permission_required = 'mainpages.change_unit',
+            fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'neighbourhood', 'rent', 'size', 'livingrooms',
+            'bedrooms', 'bathrooms', 'dens', 'description', 'tenant', 'date_available', 'status', 'advertise', 'tags', 'building', ), ),
             name='unit-update'),
 
     path('unit/<slug:slug>/delete',
@@ -80,9 +80,6 @@ urlpatterns = [
 
         path('housing/create', HomeCreateView.as_view(), name='home-create'),
         path('home/<slug:slug>/update', views.HomeUpdateView.as_view(), name='home-update'),
-
-
-        
 
     path('home/<slug:slug>/delete',
         OwnerDeleteView.as_view(

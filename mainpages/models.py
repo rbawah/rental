@@ -99,8 +99,8 @@ class AbstractHome(models.Model):
     bathrooms = models.DecimalField(help_text = 'Number of Bathrooms', max_digits=3, decimal_places=1)
     advertise = models.BooleanField(help_text = 'Advertise this Unit?', default=False)
     tags = models.CharField(max_length=200, blank=True, help_text='Enter search tags separated by commas.')
-    rent = models.IntegerField(help_text='Rent amount in $', blank=True, null=True, )
-    neighbourhood = models.CharField(max_length=200, help_text='Which community is the home located?', blank=True, )
+    rent = models.IntegerField(help_text='Rent amount in $',)
+    neighbourhood = models.CharField(max_length=200, help_text='Which community is the home located?',)
     #year_built = models.DateField(blank=True, null=True, )
 
     class Meta:
@@ -183,10 +183,14 @@ class Unit(Home):
         verbose_name = 'Unit'
         verbose_name_plural = "Units"
 
+    def get_absolute_url(self):
+        """Returns the url to access a detail information for the home."""
+        return reverse('home-detail', args=[str(self.slug)])
 
 
 class HomePhotos(models.Model):
     home = models.ForeignKey(Home, default=None, on_delete=models.CASCADE, related_name = 'pics_home',)
+    #home = models.ForeignKey(Home, default=None, on_delete=models.CASCADE, related_name = 'pics_home',)
     pictures = models.ImageField(upload_to = 'homes/', blank = True, )
 ''' 
     def __str__(self):

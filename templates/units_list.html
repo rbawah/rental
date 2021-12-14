@@ -6,6 +6,7 @@
 <h4>Your search results for "{{ search }}"" </h4>
 {% endif %}
 
+
 {% if page_obj %}
     {% if building %}
         <h4>Units in {{ building }} </h4>
@@ -14,7 +15,7 @@
         <h4>Homes in {{ city }} </h4>
     {% endif %}
 
-
+<hr>
     {% for home in page_obj %}
         <a href="{{ home.get_absolute_url }}">
         <div class="card card-body bg-light">

@@ -33,7 +33,7 @@ class UnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Unit
         fields = ('name', 'hometype', 'province', 'location', 'postal_code', 'address', 'size', 'livingrooms',
-                 'bedrooms', 'bathrooms', 'dens', 'description', 'building', 'tenant', 'date_available', 'status', 'advertise', 'pictures', 'manager',)
+                 'bedrooms', 'bathrooms', 'dens', 'description', 'building', 'tenant', 'date_available', 'status', 'advertise', 'manager',)
 
 
 class BuildingSerializer(serializers.ModelSerializer):

@@ -5,14 +5,16 @@
 
 {% block content %}
   <h2>Welcome to DjangoRealtor</h2>
-
+  
   <!--div-->
     <!-- https://www.w3schools.com/howto/howto_css_search_button.asp -->
       <!--form action="#" method="get">
         <input name="searchpage" type="text" class="form-control">
       </form>
   </div-->
-
+<hr>
+<a class="btn btn-info" href="{% url 'home_search' %}">View All Homes</a>
+<hr>
 {% for city in cities %}
 <a class="home-item" href="{% url 'city_homes' city.slug %}">
     <div class="card card-body bg-light">
@@ -20,7 +22,7 @@
             <div class="media">
                 <img class="citycover d-flex mr-3 img-thumbnail align-self-center" src="{{ city.image.url }}" alt="picture of {{ city }}">
             <div class="media-body">
-            <h5 class="mt-0"><p class="badge badge-pill badge-secondary">Homes in {{ city }}</p></h5>
+            <h5 class="mt-0"><p class="badge-secondary">Homes in {{ city }}</p></h5>
 
                 </div>
             </div>

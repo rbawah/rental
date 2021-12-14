@@ -8,8 +8,17 @@ class HomePhotosAdmin(admin.StackedInline):
 class BuildingAdmin(admin.ModelAdmin):
     #list_display = ('name',)
     prepopulated_fields = {'slug': ('name',)}
+
+
 class UnitAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
+
+    inlines = [HomePhotosAdmin]
+    extra = 0
+ 
+    class Meta:
+       model = Unit
+    
 class HomeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     inlines = [HomePhotosAdmin]
