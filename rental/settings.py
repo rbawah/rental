@@ -217,7 +217,7 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS=2
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE=True
 ACCOUNT_EMAIL_VERIFICATION = 'optional' # Lookup
 
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 #SENDGRID
@@ -225,10 +225,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'optional' # Lookup
 #EMAIL_HOST_PASSWORD="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"
 #EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 # -------
-EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_HOST_USER = "apikey"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+#EMAIL_HOST = "smtp.sendgrid.net"
+#EMAIL_HOST_USER = "apikey"
+#EMAIL_PORT = 587
+#EMAIL_USE_TLS = True
 
 
 #static files configs
@@ -248,13 +248,6 @@ MEDIA_ROOT = str(BASE_DIR.joinpath('media'))
 
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
-"""
-cloudinary.config( 
-  cloud_name = "rbawah", 
-  api_key = "667719888935426", 
-  api_secret = "_lq2uMyqbRRBrtnXj1qQCvGL4dI" 
-)"""
 
 CLOUDINARY_URL = env("CLOUDINARY_URL")
 """
