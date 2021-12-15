@@ -192,15 +192,7 @@ class HomePhotos(models.Model):
     home = models.ForeignKey(Home, default=None, on_delete=models.CASCADE, related_name = 'pics_home',)
     #home = models.ForeignKey(Home, default=None, on_delete=models.CASCADE, related_name = 'pics_home',)
     pictures = models.ImageField(upload_to = 'homes/', blank = True, )
-    slug = models.SlugField(null =True, blank=True, )
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        return super().save(*args, **kwargs)
-
-
-        
 ''' 
     def __str__(self):
         return self.home.name
