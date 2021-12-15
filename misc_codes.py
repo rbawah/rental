@@ -56,3 +56,5 @@ class BuildingListView(OwnerListView): # Tests to be written
                                             Q(description__icontains=query) |
                                             Q(location__city__icontains=query),
                                             ).order_by('date_added')
+
+

@@ -14,7 +14,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 class HomeType(models.Model):
     """Model representing the type of home, eg, Apartment, Condo, House, etc."""
     name = models.CharField(max_length=25, help_text = 'Select the Home Type (e.g. Apartment, Condo, House)')
-    slug = models.SlugField(null = True, blank=True)
+    slug = models.SlugField(null = False, unique = True,)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -35,7 +35,7 @@ class HomeType(models.Model):
 
 class LocationProvince(models.Model):
     province = models.CharField(max_length=30,)
-    slug = models.SlugField(null = True, blank=True)
+    slug = models.SlugField(null = False, unique = True,)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -58,7 +58,7 @@ class LocationCity(models.Model):
     province = models.ForeignKey('LocationProvince', on_delete=models.CASCADE)
     city = models.CharField(max_length=30,)
     image = models.ImageField(upload_to='cities/', blank=True,)
-    slug = models.SlugField(null = True, blank=True)
+    slug = models.SlugField(null = False, unique = True,)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -192,6 +192,15 @@ class HomePhotos(models.Model):
     home = models.ForeignKey(Home, default=None, on_delete=models.CASCADE, related_name = 'pics_home',)
     #home = models.ForeignKey(Home, default=None, on_delete=models.CASCADE, related_name = 'pics_home',)
     pictures = models.ImageField(upload_to = 'homes/', blank = True, )
+    slug = models.SlugField(null =True, blank=True, )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
+
+
+        
 ''' 
     def __str__(self):
         return self.home.name

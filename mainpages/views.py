@@ -86,7 +86,7 @@ class HomeSearchView(ListView): #includes all homes view logic
         strval =  request.GET.get("search", False)
         if strval :
             #query = strval
-            vector = SearchVector('name', 'neighbourhood', 'tags', 'location__city', 'description', )
+            vector = SearchVector('location__city', 'neighbourhood', 'name', 'tags', 'description', )
             query = SearchQuery(strval)
             home_list = Home.objects.annotate(rank=SearchRank(vector, query)).order_by('-rank')
         else :

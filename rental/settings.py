@@ -28,7 +28,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = env.bool("DJANGO_DEBUG", default=True)
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
 
 
@@ -215,14 +215,14 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS=2
 ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE=True
-ACCOUNT_EMAIL_VERIFICATION = 'optional' # Lookup
+ACCOUNT_EMAIL_VERIFICATION = 'none' # Lookup
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 #SENDGRID
 #DEFAULT_FROM_EMAIL = "rashbawah@gmail.com"
-#EMAIL_HOST_PASSWORD="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"
+#EMAIL_HOST_PASSWORD=""
 #EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 # -------
 #EMAIL_HOST = "smtp.sendgrid.net"
